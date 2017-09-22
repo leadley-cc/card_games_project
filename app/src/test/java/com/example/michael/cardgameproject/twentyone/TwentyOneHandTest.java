@@ -15,12 +15,14 @@ import static org.junit.Assert.*;
 public class TwentyOneHandTest {
     Card card1;
     Card card2;
+    Card card3;
     TwentyOneHand hand;
 
     @Before
     public void before() {
         card1 = new Card(CardRank.ACE, CardSuit.HEARTS);
         card2 = new Card(CardRank.NINE, CardSuit.CLUBS);
+        card3 = new Card(CardRank.KING, CardSuit.DIAMONDS);
         hand = new TwentyOneHand();
     }
 
@@ -52,6 +54,13 @@ public class TwentyOneHandTest {
     public void aceNineAceValueIs21() {
         hand.addCard(card1);
         hand.addCard(card2);
+        hand.addCard(card1);
+        assertEquals(21, hand.getCurrentValue());
+    }
+
+    @Test
+    public void kingAceValueIs21() {
+        hand.addCard(card3);
         hand.addCard(card1);
         assertEquals(21, hand.getCurrentValue());
     }
