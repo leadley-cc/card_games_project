@@ -7,10 +7,10 @@ import java.util.*;
  */
 
 public class Deck {
-    private List<Card> cards;
+    private LinkedList<Card> cards;
 
     public Deck() {
-        cards = new ArrayList<>();
+        cards = new LinkedList<>();
         generateDeck();
         shuffle();
     }
@@ -32,6 +32,6 @@ public class Deck {
     }
 
     public Card deal() {
-        return cards.remove(0);
+        return cards.poll();
     }
 }
