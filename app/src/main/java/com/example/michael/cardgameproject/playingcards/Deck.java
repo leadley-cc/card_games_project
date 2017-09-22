@@ -12,6 +12,7 @@ public class Deck {
     public Deck() {
         cards = new ArrayList<>();
         generateDeck();
+        shuffle();
     }
 
     public List<Card> getCards() {
