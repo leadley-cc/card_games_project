@@ -39,6 +39,7 @@ public class DeckTest {
     @Test
     public void canDeal() {
         assertNotNull(deck.deal());
+        assertEquals(51, deck.getCards().size());
     }
 
 }
