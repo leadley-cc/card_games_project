@@ -16,6 +16,10 @@ class TwentyOneHand {
         this.cards = new ArrayList<>();
     }
 
+    public TwentyOneHand(Card card1, Card card2) {
+        this.cards = new ArrayList<>( Arrays.asList(card1, card2) );
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

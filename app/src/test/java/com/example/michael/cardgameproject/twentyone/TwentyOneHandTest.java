@@ -33,8 +33,7 @@ public class TwentyOneHandTest {
 
     @Test
     public void addCards() {
-        hand.addCard(card1);
-        hand.addCard(card2);
+        hand = new TwentyOneHand(card1, card2);
         assertEquals(2, hand.getCards().size());
     }
 
@@ -45,8 +44,7 @@ public class TwentyOneHandTest {
 
     @Test
     public void aceNineValueIs20() {
-        hand.addCard(card1);
-        hand.addCard(card2);
+        hand = new TwentyOneHand(card1, card2);
         assertEquals(20, hand.getCurrentValue());
     }
 
@@ -60,8 +58,7 @@ public class TwentyOneHandTest {
 
     @Test
     public void kingAceValueIs21() {
-        hand.addCard(card3);
-        hand.addCard(card1);
+        hand = new TwentyOneHand(card3, card1);
         assertEquals(21, hand.getCurrentValue());
     }
 
