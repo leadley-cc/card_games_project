@@ -1,15 +1,11 @@
 package com.example.michael.cardgameproject.simplewhist;
 
-import com.example.michael.cardgameproject.playingcards.Card;
-import com.example.michael.cardgameproject.playingcards.CardRank;
-import com.example.michael.cardgameproject.playingcards.CardSuit;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.example.michael.cardgameproject.playingcards.*;
+
+import java.util.*;
 
 import static org.junit.Assert.*;
 

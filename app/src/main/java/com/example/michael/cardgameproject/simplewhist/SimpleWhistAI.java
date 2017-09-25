@@ -10,19 +10,19 @@ import java.util.List;
  * Created by michael on 25/09/2017.
  */
 
-public class SimpleWhistAI {
+class SimpleWhistAI {
     private List<Card> hand;
 
-    public SimpleWhistAI(List<Card> hand) {
+    SimpleWhistAI(List<Card> hand) {
         this.hand = hand;
     }
 
-    public Card chooseCardFirst() {
+    Card chooseCardFirst() {
         // Pretty lazy, but for now just play our highest card
         return highestCard(hand);
     }
 
-    public Card chooseCardSecond(Card playerCard, CardSuit trumps) {
+    Card chooseCardSecond(Card playerCard, CardSuit trumps) {
         // If we only have one card, play it
         if (hand.size() == 1) return hand.get(0);
 
