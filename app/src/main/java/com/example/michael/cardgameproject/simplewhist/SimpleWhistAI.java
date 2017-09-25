@@ -28,42 +28,56 @@ class SimpleWhistAI {
 
         // Find all the cards we have in the same suit
         CardSuit currentSuit = playerCard.getSuit();
-        List<Card> cardsInSuit = new ArrayList<>();
-        for (Card card : hand) {
-            if (card.getSuit() == currentSuit) cardsInSuit.add(card);
-        }
+        List<Card> cardsInSuit = getCardsInSuit(currentSuit);
 
         // If we don't have any cards in the same suit we want to trump
         if (cardsInSuit.size() == 0) {
-            List<Card> cardsInTrumps = new ArrayList<>();
-            for (Card card : hand) {
-                if (card.getSuit() == trumps) cardsInTrumps.add(card);
-            }
-            Card lowestTrump = lowestCard(cardsInTrumps);
+            List<Card> trumpsInHand = getTrumpsInHand(trumps);
 
             // If we don't have any trumps either, throw away our lowest card
-            if (lowestTrump == null) return lowestCard(hand);
+            if (trumpsInHand.size() == 0) return lowestCard(hand);
 
             // Otherwise, return our lowest trump to win with
-            return lowestTrump;
+            return lowestCard(trumpsInHand);
         }
 
         // Try to find the lowest card we have that will win
-        Card lowestCardToWin = null;
-        int lowestCardToWinValue = Integer.MAX_VALUE;
-        for (Card card : cardsInSuit) {
-            if ( cardValue(card) > cardValue(playerCard)
-                    && cardValue(card) < lowestCardToWinValue ) {
-                lowestCardToWin = card;
-                lowestCardToWinValue = cardValue(card);
-            }
-        }
+        Card lowestCardToWin = getLowestCardToBeat(playerCard, cardsInSuit);
 
         // If we didn't find any winner, play the lowest card we have in the suit
         if (lowestCardToWin == null) return lowestCard(cardsInSuit);
 
         // Otherwise return our winner
         return lowestCardToWin;
+    }
+
+    private Card getLowestCardToBeat(Card playerCard, List<Card> cards) {
+        Card lowestCardToWin = null;
+        int lowestCardToWinValue = Integer.MAX_VALUE;
+        for (Card card : cards) {
+            if ( cardValue(card) > cardValue(playerCard)
+                    && cardValue(card) < lowestCardToWinValue ) {
+                lowestCardToWin = card;
+                lowestCardToWinValue = cardValue(card);
+            }
+        }
+        return lowestCardToWin;
+    }
+
+    private List<Card> getCardsInSuit(CardSuit currentSuit) {
+        List<Card> cardsInSuit = new ArrayList<>();
+        for (Card card : hand) {
+            if (card.getSuit() == currentSuit) cardsInSuit.add(card);
+        }
+        return cardsInSuit;
+    }
+
+    private List<Card> getTrumpsInHand(CardSuit trumps) {
+        List<Card> trumpsInHand = new ArrayList<>();
+        for (Card card : hand) {
+            if (card.getSuit() == trumps) trumpsInHand.add(card);
+        }
+        return trumpsInHand;
     }
 
     private Card highestCard(List<Card> cards) {
