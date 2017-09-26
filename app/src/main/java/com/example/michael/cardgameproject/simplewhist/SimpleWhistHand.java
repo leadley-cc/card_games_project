@@ -83,6 +83,13 @@ class SimpleWhistHand {
         return lowestInSuit;
     }
 
+    Card takeLowestCardToBeat(Card playerCard) {
+        TreeSet<Card> suitMap = cardMap.get(playerCard.getSuit());
+        Card lowestCardToBeat = suitMap.higher(playerCard);
+        if (lowestCardToBeat != null) remove(lowestCardToBeat);
+        return lowestCardToBeat;
+    }
+
     void remove(Card card) {
         if (!cardSet.contains(card)) return;
 
