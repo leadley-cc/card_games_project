@@ -1,4 +1,4 @@
-package com.example.michael.cardgameproject.simplewhist;
+package com.example.michael.cardgameproject.simplewhist.userinterfaces;
 
 import com.example.michael.cardgameproject.GameWinner;
 import com.example.michael.cardgameproject.playingcards.Card;
@@ -12,7 +12,7 @@ import java.util.Scanner;
  * Created by michael on 25/09/2017.
  */
 
-class SimpleWhistConsole implements SimpleWhistUI {
+public class SimpleWhistConsole implements SimpleWhistUI {
     @Override
     public void showPlayerHand(List<Card> playerHand) {
         System.out.println("You have been dealt:");

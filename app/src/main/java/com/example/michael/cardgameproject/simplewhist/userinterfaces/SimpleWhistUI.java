@@ -1,4 +1,4 @@
-package com.example.michael.cardgameproject.simplewhist;
+package com.example.michael.cardgameproject.simplewhist.userinterfaces;
 
 import com.example.michael.cardgameproject.GameWinner;
 import com.example.michael.cardgameproject.playingcards.Card;
@@ -10,7 +10,7 @@ import java.util.List;
  * Created by michael on 25/09/2017.
  */
 
-interface SimpleWhistUI {
+public interface SimpleWhistUI {
     void showPlayerHand(List<Card> playerHand);
 
     void showTrumps(CardSuit trumps);

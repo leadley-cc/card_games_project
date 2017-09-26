@@ -1,6 +1,8 @@
 package com.example.michael.cardgameproject.simplewhist;
 
 import com.example.michael.cardgameproject.playingcards.Deck;
+import com.example.michael.cardgameproject.simplewhist.userinterfaces.SimpleWhistConsole;
+import com.example.michael.cardgameproject.simplewhist.userinterfaces.SimpleWhistUI;
 
 /**
  * Created by michael on 25/09/2017.

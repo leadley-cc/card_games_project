@@ -2,6 +2,7 @@ package com.example.michael.cardgameproject.simplewhist;
 
 import com.example.michael.cardgameproject.GameWinner;
 import com.example.michael.cardgameproject.playingcards.*;
+import com.example.michael.cardgameproject.simplewhist.userinterfaces.SimpleWhistUI;
 
 import java.util.*;
 
