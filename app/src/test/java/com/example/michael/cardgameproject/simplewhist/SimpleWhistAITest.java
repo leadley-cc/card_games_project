@@ -21,6 +21,7 @@ public class SimpleWhistAITest {
     private Card jackOfClubs;
     private Card kingOfSpades;
     private Card aceOfDiamonds;
+    private SimpleWhistHand aiHand;
     private SimpleWhistAI testAI;
     private CardSuit trumps;
 
@@ -33,11 +34,12 @@ public class SimpleWhistAITest {
         jackOfClubs = new Card(CardRank.JACK, CardSuit.CLUBS);
         kingOfSpades = new Card(CardRank.KING, CardSuit.SPADES);
         aceOfDiamonds = new Card(CardRank.ACE, CardSuit.DIAMONDS);
-        List<Card> aiCards = new ArrayList<>( Arrays.asList(
+        List<Card> aiCards = Arrays.asList(
                 twoOfDiamonds, fiveOfClubs, sevenOfSpades,
                 nineOfClubs, jackOfClubs, kingOfSpades, aceOfDiamonds
-        ));
-        testAI = new SimpleWhistAI(aiCards);
+        );
+        aiHand = new SimpleWhistHand(aiCards);
+        testAI = new SimpleWhistAI(aiHand);
         trumps = CardSuit.SPADES;
     }
 
@@ -102,8 +104,9 @@ public class SimpleWhistAITest {
 
     @Test
     public void chooseTwoOfDiamondsAgainstSixOfSpadesWhenNoTrumps() {
-        List<Card> aiCards = new ArrayList<>( Arrays.asList( twoOfDiamonds, fiveOfClubs ));
-        testAI = new SimpleWhistAI(aiCards);
+        List<Card> aiCards = Arrays.asList( twoOfDiamonds, fiveOfClubs );
+        aiHand = new SimpleWhistHand(aiCards);
+        testAI = new SimpleWhistAI(aiHand);
 
         Card expected = twoOfDiamonds;
         Card result = testAI.chooseCardSecond(
