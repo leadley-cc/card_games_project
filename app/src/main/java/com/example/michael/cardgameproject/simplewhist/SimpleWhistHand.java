@@ -14,7 +14,7 @@ class SimpleWhistHand {
     private Map<CardSuit, TreeSet<Card>> cardMap;
 
     SimpleWhistHand() {
-        cardSet = new TreeSet<>(SimpleWhistCardComparator);
+        cardSet = new TreeSet<>(AceHighCardComparator);
         cardMap = new EnumMap<>(CardSuit.class);
     }
 
@@ -33,7 +33,7 @@ class SimpleWhistHand {
         if (cardMap.containsKey(currentSuit)) {
             cardMap.get(currentSuit).add(card);
         } else {
-            TreeSet<Card> suitSet = new TreeSet<>(SimpleWhistCardComparator);
+            TreeSet<Card> suitSet = new TreeSet<>(AceHighCardComparator);
             suitSet.add(card);
             cardMap.put(currentSuit, suitSet);
         }
@@ -97,7 +97,7 @@ class SimpleWhistHand {
         cardMap.get(card.getSuit()).remove(card);
     }
 
-    private static final Comparator<Card> SimpleWhistCardComparator = new Comparator<Card>() {
+    private static final Comparator<Card> AceHighCardComparator = new Comparator<Card>() {
         @Override
         public int compare(Card card1, Card card2) {
             int card1Value = cardValue(card1);
@@ -113,12 +113,15 @@ class SimpleWhistHand {
         }
 
         private int cardValue(Card card) {
+            int cardRankValue;
             switch (card.getRank()) {
                 case ACE:
-                    return 13;
+                    cardRankValue = 13; break;
                 default:
-                    return card.getRank().ordinal();
+                    cardRankValue = card.getRank().ordinal();
             }
+            int cardSuitValue = card.getSuit().ordinal();
+            return (4 * cardRankValue) + cardSuitValue;
         }
     };
 }
