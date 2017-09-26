@@ -18,6 +18,13 @@ class SimpleWhistHand {
         cardMap = new EnumMap<>(CardSuit.class);
     }
 
+    SimpleWhistHand(Collection<Card> cards) {
+        this();
+        for (Card card : cards) {
+            add(card);
+        }
+    }
+
     void add(Card card) {
         cardSet.add(card);
 
@@ -30,6 +37,14 @@ class SimpleWhistHand {
             suitSet.add(card);
             cardMap.put(currentSuit, suitSet);
         }
+    }
+
+    int size() {
+        return cardSet.size();
+    }
+
+    int suitSize(CardSuit currentSuit) {
+        return getSuit(currentSuit).size();
     }
 
     Set<Card> getHand() {
