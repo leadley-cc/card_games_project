@@ -107,4 +107,21 @@ public class SimpleWhistHandTest {
         assertEquals(1, hand.getSuit(CardSuit.CLUBS).size());
         assertEquals(1, hand.getSuit(CardSuit.SPADES).size());
     }
+
+    @Test
+    public void canAddSevenCards() {
+        hand.add( new Card(CardRank.TWO, CardSuit.DIAMONDS));
+        hand.add( new Card(CardRank.FIVE, CardSuit.CLUBS));
+        hand.add( new Card(CardRank.SEVEN, CardSuit.SPADES));
+        hand.add( new Card(CardRank.NINE, CardSuit.CLUBS));
+        hand.add( new Card(CardRank.JACK, CardSuit.CLUBS));
+        hand.add( new Card(CardRank.KING, CardSuit.SPADES));
+        hand.add( new Card(CardRank.ACE, CardSuit.DIAMONDS));
+
+        assertEquals(7, hand.getHand().size());
+        assertEquals(3, hand.getSuit(CardSuit.CLUBS).size());
+        assertEquals(2, hand.getSuit(CardSuit.DIAMONDS).size());
+        assertEquals(0, hand.getSuit(CardSuit.HEARTS).size());
+        assertEquals(2, hand.getSuit(CardSuit.SPADES).size());
+    }
 }
