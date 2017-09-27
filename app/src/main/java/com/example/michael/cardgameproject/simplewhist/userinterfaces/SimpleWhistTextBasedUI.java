@@ -13,7 +13,7 @@ import java.util.List;
 abstract class SimpleWhistTextBasedUI implements SimpleWhistUI {
     public abstract void log(String message);
 
-    public abstract int getIntegerInput(int lowerBound, int upperBound);
+    public abstract Card getPlayerCard(List<Card> playerCards);
 
     @Override
     public void showPlayerHand(List<Card> playerHand) {
@@ -32,29 +32,6 @@ abstract class SimpleWhistTextBasedUI implements SimpleWhistUI {
         log( String.format(
                 "Trumps is %s", trumps.name()
         ));
-    }
-
-    @Override
-    public Card getPlayerCard(List<Card> playerCards) {
-        log("Available cards:");
-        int counter = 1;
-
-        for (Card card : playerCards) {
-            String message = String.format(
-                    "(%d) %s OF %s", counter, card.getRank().name(), card.getSuit().name()
-            );
-            log(message);
-            counter++;
-        }
-
-        int index = getIntegerInput(0, playerCards.size());
-
-        Card playerCard = playerCards.get(index - 1);
-        log(String.format(
-                "You play: %s OF %s.",
-                playerCard.getRank().name(), playerCard.getSuit().name()
-        ));
-        return playerCard;
     }
 
     @Override
@@ -78,7 +55,7 @@ abstract class SimpleWhistTextBasedUI implements SimpleWhistUI {
     @Override
     public void showScores(int dealerTricks, int playerTricks) {
         log( String.format(
-                "The dealer has %d tricks and you have %d tricks.",
+                "The dealer has %d tricks and you have %d tricks.\n\n",
                 dealerTricks, playerTricks
         ));
     }
