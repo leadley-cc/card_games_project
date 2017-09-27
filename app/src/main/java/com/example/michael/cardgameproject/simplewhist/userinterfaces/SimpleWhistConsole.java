@@ -57,4 +57,13 @@ public class SimpleWhistConsole extends SimpleWhistTextBasedUI {
         return input;
     }
 
+    @Override
+    public void clearText() {
+        log("\n");
+    }
+
+    @Override
+    public void prepareForNextTurn() {
+
+    }
 }

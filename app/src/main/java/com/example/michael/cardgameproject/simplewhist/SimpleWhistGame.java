@@ -78,6 +78,7 @@ public class SimpleWhistGame {
 
         gameUI.showTrickWinner(trickWinner);
         gameUI.showScores(dealerTricks, playerTricks);
+        gameUI.prepareForNextTurn();
     }
 
     public void prepare() {

@@ -24,4 +24,6 @@ public interface SimpleWhistUI {
     void showScores(int dealerTricks, int playerTricks);
 
     void showGameWinner(GameWinner gameWinner);
+
+    void prepareForNextTurn();
 }

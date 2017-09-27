@@ -15,6 +15,8 @@ abstract class SimpleWhistTextBasedUI implements SimpleWhistUI {
 
     public abstract Card getPlayerCard(List<Card> playerCards);
 
+    public abstract void clearText();
+
     @Override
     public void showPlayerHand(List<Card> playerHand) {
         log("You have been dealt:");
@@ -55,7 +57,7 @@ abstract class SimpleWhistTextBasedUI implements SimpleWhistUI {
     @Override
     public void showScores(int dealerTricks, int playerTricks) {
         log( String.format(
-                "The dealer has %d tricks and you have %d tricks.\n\n",
+                "The dealer has %d tricks and you have %d tricks.",
                 dealerTricks, playerTricks
         ));
     }
@@ -68,5 +70,10 @@ abstract class SimpleWhistTextBasedUI implements SimpleWhistUI {
             default:
                 log("Better luck next time!");
         }
+    }
+
+    @Override
+    public void prepareForNextTurn() {
+        clearText();
     }
 }
