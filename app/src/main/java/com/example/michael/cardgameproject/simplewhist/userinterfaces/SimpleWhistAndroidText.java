@@ -2,6 +2,7 @@ package com.example.michael.cardgameproject.simplewhist.userinterfaces;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -20,26 +21,30 @@ public class SimpleWhistAndroidText extends SimpleWhistTextBasedUI {
     private TextView messageBox;
     private CardTextAdapter cardTextAdapter;
     private Activity activity;
+    private Button nextTurnButton;
 
     private Card chosenCard;
+    private boolean nextTurn;
 
     public SimpleWhistAndroidText(
             ScrollView scrollBox, TextView messageBox,
-            CardTextAdapter cardTextAdapter, Activity activity
+            CardTextAdapter cardTextAdapter, Button nextTurnButton, Activity activity
     ) {
         this.scrollBox = scrollBox;
         this.messageBox = messageBox;
         this.cardTextAdapter = cardTextAdapter;
+        this.nextTurnButton = nextTurnButton;
         this.activity = activity;
         this.chosenCard = null;
+        this.nextTurn = false;
     }
 
     @Override
     public void log(final String message) {
         messageBox.post( new Runnable() {
             public void run() {
-                messageBox.append("\n");
                 messageBox.append(message);
+                messageBox.append("\n");
             }
         });
 
@@ -79,7 +84,37 @@ public class SimpleWhistAndroidText extends SimpleWhistTextBasedUI {
         return playerCard;
     }
 
+    @Override
+    public void clearText() {
+        messageBox.post( new Runnable() {
+            public void run() {
+                messageBox.setText("");
+            }
+        });
+    }
+
+    @Override
+    public void prepareForNextTurn() {
+        nextTurnButton.post(new Runnable() {
+            public void run() {
+                nextTurnButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+        while (!nextTurn) {
+            sleep(100);
+        }
+
+        clearText();
+
+        toggleNextTurn();
+    }
+
     public void setChosenCard(Card chosenCard) {
         this.chosenCard = chosenCard;
+    }
+
+    public void toggleNextTurn() {
+        nextTurn = !nextTurn;
     }
 }

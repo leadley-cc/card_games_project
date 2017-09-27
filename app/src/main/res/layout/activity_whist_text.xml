@@ -28,6 +28,7 @@
             android:id="@+id/message_box"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:lineSpacingExtra="4sp"
             android:textSize="16sp" />
 
     </ScrollView>
@@ -42,6 +43,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/next_turn_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:onClick="onNextTurnButtonClicked"
+        android:text="Next Turn"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/scroll_box"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
 
 

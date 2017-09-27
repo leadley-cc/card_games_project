@@ -24,6 +24,7 @@ public class WhistTextActivity extends AppCompatActivity {
     ScrollView scrollBox;
     TextView messageBox;
     ListView cardPicker;
+    Button nextTurn;
 
     CardTextAdapter cardTextAdapter;
 
@@ -41,17 +42,18 @@ public class WhistTextActivity extends AppCompatActivity {
         scrollBox = (ScrollView) findViewById(R.id.scroll_box);
         messageBox = (TextView) findViewById(R.id.message_box);
         cardPicker = (ListView) findViewById(R.id.card_picker);
+        nextTurn = (Button) findViewById(R.id.next_turn_button);
 
         cardTextAdapter = new CardTextAdapter(this, new ArrayList<Card>());
         cardPicker.setAdapter(cardTextAdapter);
 
         deck = new Deck();
         gameUI = new SimpleWhistAndroidText(
-                scrollBox, messageBox, cardTextAdapter, this
+                scrollBox, messageBox, cardTextAdapter, nextTurn, this
         );
         game = new SimpleWhistGame(deck, gameUI);
 
-        messageBox.append("Welcome to Whist!");
+        messageBox.append("Welcome to Whist!\n");
 
         new Thread( new Runnable() {
             public void run() {
@@ -66,5 +68,11 @@ public class WhistTextActivity extends AppCompatActivity {
         Log.d("getCard called", chosenCard.toString());
 
         gameUI.setChosenCard(chosenCard);
+    }
+
+    public void onNextTurnButtonClicked(View button) {
+        button.setVisibility(View.GONE);
+
+        gameUI.toggleNextTurn();
     }
 }
