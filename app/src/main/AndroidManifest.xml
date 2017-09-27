@@ -12,7 +12,7 @@
 
         <activity
             android:name=".WhistTextActivity"
-            android:label="Whist"
+            android:label="@string/whist_label"
             android:parentActivityName=".WelcomeActivity">
 
         </activity>
@@ -27,7 +27,7 @@
 
         <activity
             android:name=".TwentyOneActivity"
-            android:label="21"
+            android:label="@string/twenty_one_label"
             android:parentActivityName=".WelcomeActivity">
 
         </activity>
