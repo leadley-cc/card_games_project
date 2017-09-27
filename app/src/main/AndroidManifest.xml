@@ -25,6 +25,13 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".TwentyOneActivity"
+            android:label="21"
+            android:parentActivityName=".WelcomeActivity">
+
+        </activity>
+
     </application>
 
 </manifest>
