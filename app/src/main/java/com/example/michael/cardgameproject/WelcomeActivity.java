@@ -17,4 +17,9 @@ public class WelcomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, WhistTextActivity.class);
         startActivity(intent);
     }
+
+    public void onTwentyOneButtonClicked(View button) {
+        Intent intent = new Intent(this, TwentyOneActivity.class);
+        startActivity(intent);
+    }
 }
