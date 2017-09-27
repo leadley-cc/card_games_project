@@ -71,9 +71,4 @@ abstract class SimpleWhistTextBasedUI implements SimpleWhistUI {
                 log("Better luck next time!");
         }
     }
-
-    @Override
-    public void prepareForNextTurn() {
-        clearText();
-    }
 }

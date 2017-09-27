@@ -64,6 +64,6 @@ public class SimpleWhistConsole extends SimpleWhistTextBasedUI {
 
     @Override
     public void prepareForNextTurn() {
-
+        clearText();
     }
 }
