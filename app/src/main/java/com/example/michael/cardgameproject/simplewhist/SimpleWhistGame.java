@@ -46,39 +46,49 @@ public class SimpleWhistGame {
     public void playGame() {
         prepare();
 
-        Card dealerCard;
-        Card playerCard;
-
         for (int i = 0; i < 7; i++) {
-            gameUI.showTrumps(trumps);
-
-            if (currentTurn == PLAYER_TURN) {
-                playerCard = gameUI.getPlayerCard(playerHand);
-                dealerCard = dealerAI.chooseCardSecond(playerCard, trumps);
-                gameUI.showDealerCard(dealerCard);
-            } else {
-                dealerCard = dealerAI.chooseCardFirst();
-                gameUI.showDealerCard(dealerCard);
-                playerCard = gameUI.getPlayerCard(getPlayableCards(dealerCard));
-            }
-
-            playerHand.remove(playerCard);
-            dealerHand.remove(dealerCard);
-
-            GameWinner trickWinner = getTrickWinner(dealerCard, playerCard);
-            countTrickAndSetTurn(trickWinner);
-
-            gameUI.showTrickWinner(trickWinner);
-            gameUI.showScores(dealerTricks, playerTricks);
+            playTurn();
         }
-        GameWinner gameWinner = determineWinner();
+
+        GameWinner gameWinner = getWinner();
         gameUI.showGameWinner(gameWinner);
     }
 
-    void prepare() {
+    public void playTurn() {
+        Card dealerCard;
+        Card playerCard;
+
+        gameUI.showTrumps(trumps);
+
+        if (currentTurn == PLAYER_TURN) {
+            playerCard = gameUI.getPlayerCard(playerHand);
+            dealerCard = dealerAI.chooseCardSecond(playerCard, trumps);
+            gameUI.showDealerCard(dealerCard);
+        } else {
+            dealerCard = dealerAI.chooseCardFirst();
+            gameUI.showDealerCard(dealerCard);
+            playerCard = gameUI.getPlayerCard(getPlayableCards(dealerCard));
+        }
+
+        playerHand.remove(playerCard);
+        dealerHand.remove(dealerCard);
+
+        GameWinner trickWinner = getTrickWinner(dealerCard, playerCard);
+        countTrickAndSetTurn(trickWinner);
+
+        gameUI.showTrickWinner(trickWinner);
+        gameUI.showScores(dealerTricks, playerTricks);
+    }
+
+    public void prepare() {
         dealCards();
         trumps = CardSuit.values()[ random.nextInt(4) ];
         currentTurn = random.nextInt(2);
+    }
+
+    public GameWinner getWinner() {
+        if (dealerTricks > playerTricks) return GameWinner.DEALER;
+        return GameWinner.PLAYER;
     }
 
     private List<Card> getPlayableCards(Card dealerCard) {
@@ -122,11 +132,6 @@ public class SimpleWhistGame {
             playerHand.add( deck.deal() );
             dealerHand.add( deck.deal() );
         }
-    }
-
-    private GameWinner determineWinner() {
-        if (dealerTricks > playerTricks) return GameWinner.DEALER;
-        return GameWinner.PLAYER;
     }
 
     private void countTrickAndSetTurn(GameWinner trickWinner) {
