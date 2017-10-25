@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.example.michael.cardgameproject.playingcards.Card;
 
 import java.util.List;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 
 import static android.os.SystemClock.sleep;
 
@@ -24,19 +26,27 @@ public class SimpleWhistAndroidText extends SimpleWhistTextBasedUI {
     private Button nextTurnButton;
 
     private Card chosenCard;
-    private boolean nextTurn;
+
+    private Lock lock;
+    private Condition cardChosen;
+    private Condition nextTurn;
 
     public SimpleWhistAndroidText(
             ScrollView scrollBox, TextView messageBox,
-            CardTextAdapter cardTextAdapter, Button nextTurnButton, Activity activity
+            CardTextAdapter cardTextAdapter, Button nextTurnButton, Activity activity,
+            Lock lock, Condition cardChosen, Condition nextTurn
     ) {
         this.scrollBox = scrollBox;
         this.messageBox = messageBox;
         this.cardTextAdapter = cardTextAdapter;
         this.nextTurnButton = nextTurnButton;
         this.activity = activity;
+
         this.chosenCard = null;
-        this.nextTurn = false;
+
+        this.lock = lock;
+        this.cardChosen = cardChosen;
+        this.nextTurn = nextTurn;
     }
 
     @Override
@@ -66,8 +76,13 @@ public class SimpleWhistAndroidText extends SimpleWhistTextBasedUI {
 
         this.chosenCard = null;
 
-        while (chosenCard == null) {
-            sleep(100);
+        lock.lock();
+        try {
+            while (chosenCard == null) {
+                cardChosen.awaitUninterruptibly();
+            }
+        } finally {
+            lock.unlock();
         }
 
         activity.runOnUiThread( new Runnable() {
@@ -101,8 +116,11 @@ public class SimpleWhistAndroidText extends SimpleWhistTextBasedUI {
             }
         });
 
-        while (!nextTurn) {
-            sleep(100);
+        lock.lock();
+        try {
+            nextTurn.awaitUninterruptibly();
+        } finally {
+            lock.unlock();
         }
 
         clearText();
@@ -114,7 +132,5 @@ public class SimpleWhistAndroidText extends SimpleWhistTextBasedUI {
         this.chosenCard = chosenCard;
     }
 
-    public void toggleNextTurn() {
-        nextTurn = !nextTurn;
-    }
+    public void toggleNextTurn() {}
 }

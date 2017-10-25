@@ -16,21 +16,26 @@ import com.example.michael.cardgameproject.simplewhist.userinterfaces.CardTextAd
 import com.example.michael.cardgameproject.simplewhist.userinterfaces.SimpleWhistAndroidText;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class WhistTextActivity extends AppCompatActivity {
 
     ScrollView scrollBox;
     TextView messageBox;
     ListView cardPicker;
-    Button nextTurn;
+    Button nextTurnButton;
 
     CardTextAdapter cardTextAdapter;
 
     Deck deck;
     SimpleWhistAndroidText gameUI;
     SimpleWhistGame game;
+
+    Lock lock;
+    Condition cardChosen;
+    Condition nextTurn;
 
     Card chosenCard;
 
@@ -42,14 +47,19 @@ public class WhistTextActivity extends AppCompatActivity {
         scrollBox = (ScrollView) findViewById(R.id.scroll_box);
         messageBox = (TextView) findViewById(R.id.message_box);
         cardPicker = (ListView) findViewById(R.id.card_picker);
-        nextTurn = (Button) findViewById(R.id.next_turn_button);
+        nextTurnButton = (Button) findViewById(R.id.next_turn_button);
 
         cardTextAdapter = new CardTextAdapter(this, new ArrayList<Card>());
         cardPicker.setAdapter(cardTextAdapter);
 
+        lock = new ReentrantLock();
+        cardChosen = lock.newCondition();
+        nextTurn = lock.newCondition();
+
         deck = new Deck();
         gameUI = new SimpleWhistAndroidText(
-                scrollBox, messageBox, cardTextAdapter, nextTurn, this
+                scrollBox, messageBox, cardTextAdapter, nextTurnButton, this,
+                lock, cardChosen, nextTurn
         );
         game = new SimpleWhistGame(deck, gameUI);
 
@@ -68,11 +78,25 @@ public class WhistTextActivity extends AppCompatActivity {
         Log.d("getCard called", chosenCard.toString());
 
         gameUI.setChosenCard(chosenCard);
+
+        lock.lock();
+        try {
+            cardChosen.signal();
+        } finally {
+            lock.unlock();
+        }
     }
 
     public void onNextTurnButtonClicked(View button) {
         button.setVisibility(View.GONE);
 
         gameUI.toggleNextTurn();
+
+        lock.lock();
+        try {
+            nextTurn.signal();
+        } finally {
+            lock.unlock();
+        }
     }
 }
